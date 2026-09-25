@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 4910940009041969506}
   - component: {fileID: 3995506566816015661}
   - component: {fileID: 5898071939728562726}
+  - component: {fileID: 965941319735712402}
   - component: {fileID: 3155481550736931801}
   - component: {fileID: 9109372960670118640}
   - component: {fileID: 6733837171339771101}
@@ -449,6 +450,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectIndicator: {fileID: 6290554218639418068}
+--- !u!114 &965941319735712402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003086518409698029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e118a8950a4df1a4da1127db6e5bb74f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  species: Locky
+  color: {r: 1, g: 1, b: 1, a: 1}
+  scale: 1
+  bodyRenderer: {fileID: 8283111195100094885}
 --- !u!136 &3155481550736931801
 CapsuleCollider:
   m_ObjectHideFlags: 0

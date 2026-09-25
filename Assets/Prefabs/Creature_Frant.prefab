@@ -1658,6 +1658,7 @@ GameObject:
   - component: {fileID: 1969170093786019815}
   - component: {fileID: 7478703282394921487}
   - component: {fileID: 7731519443911774841}
+  - component: {fileID: 7604308029223887282}
   - component: {fileID: 2776719130300417930}
   - component: {fileID: 8004910018429386878}
   - component: {fileID: 1007828043629721675}
@@ -1846,6 +1847,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectIndicator: {fileID: 1467334457177930347}
+--- !u!114 &7604308029223887282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960830357740165248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e118a8950a4df1a4da1127db6e5bb74f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  species: Frant
+  color: {r: 1, g: 1, b: 1, a: 1}
+  scale: 1
+  bodyRenderer: {fileID: 6756461496489146943}
 --- !u!136 &2776719130300417930
 CapsuleCollider:
   m_ObjectHideFlags: 0

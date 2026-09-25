@@ -2,15 +2,38 @@ using UnityEngine;
 
 public class CreatureGenes : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private string species;
+    [SerializeField] private Color color = Color.white;
+    [SerializeField] private float scale = 1;
+
+    [SerializeField] private SkinnedMeshRenderer bodyRenderer;
+
+    private MaterialPropertyBlock propertyBlock;
+
+    private void Awake()
     {
-        
+        if (bodyRenderer == null)
+        {
+            bodyRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        ApplyGenes();
+    }
+
+    public void ApplyGenes()
+    {
+        transform.localScale = new Vector3(scale, scale, scale);
+
+        if (propertyBlock == null)
+        {
+            propertyBlock = new MaterialPropertyBlock();
+        }
+
+        bodyRenderer.GetPropertyBlock(propertyBlock, 0);
+        propertyBlock.SetColor("_BaseColor", color);
+        bodyRenderer.SetPropertyBlock(propertyBlock, 0);
     }
 }
