@@ -223,3 +223,9 @@ MonoBehaviour:
   movePoint: {fileID: 977295441781820589}
   children: []
   creatureCap: 2
+  breedingDuration: 10
+  cooldownDuration: 15
+  creaturePrefabs:
+  - {fileID: 7604308029223887282, guid: b881671a2a435a042a696a703e330198, type: 3}
+  - {fileID: 965941319735712402, guid: 1a2c7cf019ce5f646bfb9c517bb3a3db, type: 3}
+  - {fileID: 8472508351108705467, guid: 81f48aa87b7bba4418abf9be0141fb11, type: 3}

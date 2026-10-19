@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BreedingRoom : Room
 {
@@ -11,6 +12,8 @@ public class BreedingRoom : Room
     [SerializeField] private float cooldownDuration = 15f;
     private float breedingTimer;
     private float cooldownTimer;
+
+    [SerializeField] private List<CreatureGenes> creaturePrefabs;
 
     private void Update()
     {
@@ -52,9 +55,42 @@ public class BreedingRoom : Room
 
     private void Breed()
     {
-        string message = "Creatures bred!";
+        if (!IsAlive(children[0]) || !IsAlive(children[1]))
+        {
+            Debug.Log("A parent is too unalive to breed :(");
+            return;
+        }
+
+        CreatureGenes parentA = children[0].GetComponent<CreatureGenes>();
+        CreatureGenes parentB = children[1].GetComponent<CreatureGenes>();
+
+        CreatureGenes speciesParent = Random.value < 0.5f ? parentA : parentB;
+        CreatureGenes prefab = creaturePrefabs.Find(p => p.GetSpecies() == speciesParent.GetSpecies());
+
+        if (prefab == null)
+        {
+            Debug.LogWarning($"No prefab found for species {speciesParent.GetSpecies()}");
+            return;
+        }
+
+        CreatureGenes baby = Instantiate(prefab, movePoint.position, Quaternion.identity, transform);
+        baby.SetGenes(speciesParent.GetColor(), speciesParent.GetScale()); // M4: replace with Genetics.Combine
+        baby.GetComponent<Creature>().SetName($"Baby {speciesParent.GetSpecies()}");
+
+        string message = $"A baby {speciesParent.GetSpecies()} was born!";
         Debug.Log(message);
         UIManager.Instance.DisplayWarningMessage(message);
+    }
+
+    private bool IsAlive(Transform creature)
+    {
+        if (creature == null)
+        {
+            return false;
+        }
+
+        Stat health = creature.GetComponent<Creature>().GetStat("Health");
+        return health == null || health.GetTrait().Value > 0;
     }
 
     private BreedingStatus GetStatusFromCount(int count)

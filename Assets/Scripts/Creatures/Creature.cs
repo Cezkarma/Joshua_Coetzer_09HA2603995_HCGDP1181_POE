@@ -41,6 +41,11 @@ public class Creature : MonoBehaviour
         return creatureName;
     }
 
+    public void SetName(string newName)
+    {
+        creatureName = newName;
+    }
+
     public Stat GetStat(string statName)
     {
         return stats.Find(stat => stat.GetTrait().Name == statName);

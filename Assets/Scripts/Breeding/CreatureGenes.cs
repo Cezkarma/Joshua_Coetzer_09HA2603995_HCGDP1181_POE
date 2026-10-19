@@ -36,4 +36,15 @@ public class CreatureGenes : MonoBehaviour
         propertyBlock.SetColor("_BaseColor", color);
         bodyRenderer.SetPropertyBlock(propertyBlock, 0);
     }
+
+    public string GetSpecies() { return species; }
+    public Color GetColor() { return color; }
+    public float GetScale() { return scale; }
+
+    public void SetGenes(Color newColor, float newScale)
+    {
+        color = newColor;
+        scale = newScale;
+        ApplyGenes();
+    }
 }
