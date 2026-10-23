@@ -38,13 +38,16 @@ public class CreatureGenes : MonoBehaviour
     }
 
     public string GetSpecies() { return species; }
-    public Color GetColor() { return color; }
-    public float GetScale() { return scale; }
 
-    public void SetGenes(Color newColor, float newScale)
+    public GeneData GetGeneData()
     {
-        color = newColor;
-        scale = newScale;
+        return new GeneData(color, scale);
+    }
+
+    public void SetGenes(GeneData genes)
+    {
+        color = genes.color;
+        scale = genes.scale;
         ApplyGenes();
     }
 }

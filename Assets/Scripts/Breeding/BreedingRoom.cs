@@ -15,6 +15,9 @@ public class BreedingRoom : Room
 
     [SerializeField] private List<CreatureGenes> creaturePrefabs;
 
+    private static readonly string[] INHERITED_STATS = { "Health", "Speed", "Happiness", "Hunger" };
+    private System.Random rng = new System.Random();
+
     private void Update()
     {
         BreedingStatus newStatus;
@@ -74,12 +77,33 @@ public class BreedingRoom : Room
         }
 
         CreatureGenes baby = Instantiate(prefab, movePoint.position, Quaternion.identity, transform);
-        baby.SetGenes(speciesParent.GetColor(), speciesParent.GetScale()); // M4: replace with Genetics.Combine
+        GeneData childGenes = Genetics.Combine(parentA.GetGeneData(), parentB.GetGeneData(), rng);
+        baby.SetGenes(childGenes);
+        InheritStats(baby.GetComponent<Creature>(), parentA.GetComponent<Creature>(), parentB.GetComponent<Creature>());
         baby.GetComponent<Creature>().SetName($"Baby {speciesParent.GetSpecies()}");
 
         string message = $"A baby {speciesParent.GetSpecies()} was born!";
         Debug.Log(message);
         UIManager.Instance.DisplayWarningMessage(message);
+    }
+
+    private void InheritStats(Creature baby, Creature parentA, Creature parentB)
+    {
+        foreach (string statName in INHERITED_STATS)
+        {
+            Stat babyStat = baby.GetStat(statName);
+            Stat statA = parentA.GetStat(statName);
+            Stat statB = parentB.GetStat(statName);
+
+            if (babyStat == null || statA == null || statB == null)
+            {
+                continue;
+            }
+
+            float maxValue = Genetics.PickFromParent(statA.GetTrait().MaxValue, statB.GetTrait().MaxValue, rng);
+            babyStat.GetTrait().MaxValue = maxValue;
+            babyStat.GetTrait().Value = maxValue;
+        }
     }
 
     private bool IsAlive(Transform creature)
