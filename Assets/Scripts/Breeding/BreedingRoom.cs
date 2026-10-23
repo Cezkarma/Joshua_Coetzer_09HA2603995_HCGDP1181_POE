@@ -18,6 +18,8 @@ public class BreedingRoom : Room
     private static readonly string[] INHERITED_STATS = { "Health", "Speed", "Happiness", "Hunger" };
     private System.Random rng = new System.Random();
 
+    [SerializeField] private MutationTable mutationTable;
+
     private void Update()
     {
         BreedingStatus newStatus;
@@ -77,18 +79,27 @@ public class BreedingRoom : Room
         }
 
         CreatureGenes baby = Instantiate(prefab, movePoint.position, Quaternion.identity, transform);
-        GeneData childGenes = Genetics.Combine(parentA.GetGeneData(), parentB.GetGeneData(), rng);
+        Creature babyCreature = baby.GetComponent<Creature>();
+        babyCreature.SetName($"Baby {speciesParent.GetSpecies()}");
+
+        GeneData childGenes = Genetics.Combine(parentA.GetGeneData(), parentB.GetGeneData(), mutationTable, rng, out bool genesMutated);
         baby.SetGenes(childGenes);
-        InheritStats(baby.GetComponent<Creature>(), parentA.GetComponent<Creature>(), parentB.GetComponent<Creature>());
-        baby.GetComponent<Creature>().SetName($"Baby {speciesParent.GetSpecies()}");
+        bool statsMutated = InheritStats(babyCreature, parentA.GetComponent<Creature>(), parentB.GetComponent<Creature>());
 
         string message = $"A baby {speciesParent.GetSpecies()} was born!";
+        if (genesMutated || statsMutated)
+        {
+            message += " It mutated!";
+        }
+
         Debug.Log(message);
         UIManager.Instance.DisplayWarningMessage(message);
     }
 
-    private void InheritStats(Creature baby, Creature parentA, Creature parentB)
+    private bool InheritStats(Creature baby, Creature parentA, Creature parentB)
     {
+        bool anyMutated = false;
+
         foreach (string statName in INHERITED_STATS)
         {
             Stat babyStat = baby.GetStat(statName);
@@ -100,10 +111,13 @@ public class BreedingRoom : Room
                 continue;
             }
 
-            float maxValue = Genetics.PickFromParent(statA.GetTrait().MaxValue, statB.GetTrait().MaxValue, rng);
+            float maxValue = Genetics.InheritStat(statA.GetTrait().MaxValue, statB.GetTrait().MaxValue, mutationTable, rng, out bool statMutated);
             babyStat.GetTrait().MaxValue = maxValue;
             babyStat.GetTrait().Value = maxValue;
+            anyMutated |= statMutated;
         }
+
+        return anyMutated;
     }
 
     private bool IsAlive(Transform creature)
