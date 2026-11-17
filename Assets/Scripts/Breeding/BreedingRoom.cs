@@ -54,6 +54,11 @@ public class BreedingRoom : Room
         {
             currentStatus = newStatus;
             Debug.Log(GetStatusMessage());
+
+            if (currentStatus == BreedingStatus.TooMany)
+            {
+                UIManager.Instance.DisplayWarningMessage(GetStatusMessage());
+            }
         }
     }
 
