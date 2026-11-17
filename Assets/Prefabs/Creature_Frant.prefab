@@ -1659,6 +1659,7 @@ GameObject:
   - component: {fileID: 7478703282394921487}
   - component: {fileID: 7731519443911774841}
   - component: {fileID: 7604308029223887282}
+  - component: {fileID: 7604308029223887283}
   - component: {fileID: 2776719130300417930}
   - component: {fileID: 8004910018429386878}
   - component: {fileID: 1007828043629721675}
@@ -1722,12 +1723,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureName: Frant
+  species: Frant
   stats:
   - {fileID: 4608489014779894792}
   - {fileID: 2672870949050695622}
   - {fileID: 7128207109938816080}
   - {fileID: 1969170093786019815}
   - {fileID: 7478703282394921487}
+  - {fileID: 7604308029223887282}
+  - {fileID: 7604308029223887283}
 --- !u!114 &4768844704423557171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1856,13 +1860,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 7960830357740165248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e118a8950a4df1a4da1127db6e5bb74f, type: 3}
+  m_Script: {fileID: 11500000, guid: c01a0b1e5a7e4d2f9b3c6d8e0f1a2b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  species: Frant
-  color: {r: 1, g: 1, b: 1, a: 1}
-  scale: 1
+  trait:
+    name: Colour
+    value: 50
+    maxValue: 360
+    description: The colour of your cryptid's body.
   bodyRenderer: {fileID: 6756461496489146943}
+  saturation: 0.6
+--- !u!114 &7604308029223887283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960830357740165248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1e7c3d9b2f4e6a8c0d1e2f3a4b5c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trait:
+    name: Size
+    value: 1
+    maxValue: 1
+    description: How big your cryptid is.
 --- !u!136 &2776719130300417930
 CapsuleCollider:
   m_ObjectHideFlags: 0

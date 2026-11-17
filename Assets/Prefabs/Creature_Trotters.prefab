@@ -636,6 +636,7 @@ GameObject:
   - component: {fileID: 4651705152052155931}
   - component: {fileID: 1425002177224171369}
   - component: {fileID: 8472508351108705467}
+  - component: {fileID: 8472508351108705468}
   - component: {fileID: 1210502685104623947}
   - component: {fileID: 8561216860133614919}
   - component: {fileID: 1154551668527197799}
@@ -699,12 +700,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureName: Trotters
+  species: Trotters
   stats:
   - {fileID: 5933097018538813945}
   - {fileID: 3544125027313372003}
   - {fileID: 3055593721804595800}
   - {fileID: 3882313228437201987}
   - {fileID: 4651705152052155931}
+  - {fileID: 8472508351108705467}
+  - {fileID: 8472508351108705468}
 --- !u!114 &7718809172497944689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,13 +837,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 3196208796172837067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e118a8950a4df1a4da1127db6e5bb74f, type: 3}
+  m_Script: {fileID: 11500000, guid: c01a0b1e5a7e4d2f9b3c6d8e0f1a2b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  species: Trotters
-  color: {r: 1, g: 1, b: 1, a: 1}
-  scale: 1
+  trait:
+    name: Colour
+    value: 200
+    maxValue: 360
+    description: The colour of your cryptid's body.
   bodyRenderer: {fileID: 7452991313642919590}
+  saturation: 0.6
+--- !u!114 &8472508351108705468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196208796172837067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1e7c3d9b2f4e6a8c0d1e2f3a4b5c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trait:
+    name: Size
+    value: 1
+    maxValue: 1
+    description: How big your cryptid is.
 --- !u!136 &1210502685104623947
 CapsuleCollider:
   m_ObjectHideFlags: 0

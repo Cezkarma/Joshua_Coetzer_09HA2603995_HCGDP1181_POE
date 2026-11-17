@@ -5,6 +5,9 @@ using UnityEngine;
 public class GeneticsTests
 {
     private const int RUNS = 100;
+    private const float RED = 0f;
+    private const float GREEN = 120f;
+    private const float BLUE = 240f;
 
     private MutationTable table;
 
@@ -18,30 +21,32 @@ public class GeneticsTests
     }
 
     [Test]
-    public void Combine_ColourContainsBothParents()
+    public void InheritHue_BlendsBetweenParents()
     {
         System.Random rng = new System.Random(1);
-        GeneData red = new GeneData(Color.red, 1f);
-        GeneData blue = new GeneData(Color.blue, 1f);
 
         for (int i = 0; i < RUNS; i++)
         {
-            Color child = Genetics.Combine(red, blue, null, rng, out _).color;
-            Assert.That(child.r, Is.InRange(0.25f, 0.75f));
-            Assert.That(child.b, Is.InRange(0.25f, 0.75f));
+            float hue = Genetics.InheritHue(RED, GREEN, null, rng, out _);
+            Assert.That(hue, Is.InRange(30f, 90f));
         }
     }
 
     [Test]
-    public void Combine_ScaleComesFromAParent()
+    public void BlendHue_WrapsAroundColourWheel()
+    {
+        float hue = Genetics.BlendHue(350f, 10f, 0.5f);
+        Assert.That(Mathf.Abs(Mathf.DeltaAngle(hue, 0f)), Is.LessThan(0.01f));
+    }
+
+    [Test]
+    public void InheritScale_ComesFromAParent()
     {
         System.Random rng = new System.Random(1);
-        GeneData small = new GeneData(Color.white, 0.8f);
-        GeneData large = new GeneData(Color.white, 1.2f);
 
         for (int i = 0; i < RUNS; i++)
         {
-            float scale = Genetics.Combine(small, large, null, rng, out _).scale;
+            float scale = Genetics.InheritScale(0.8f, 1.2f, null, rng, out _);
             Assert.That(scale == 0.8f || scale == 1.2f);
         }
     }
@@ -64,41 +69,45 @@ public class GeneticsTests
     }
 
     [Test]
-    public void Combine_AlwaysMutates_WhenChanceIsOne()
+    public void AllTraits_AlwaysMutate_WhenChanceIsOne()
     {
         table = MutationTable.Create(1f, new List<Color> { Color.green }, 0.5f, 0.6f, 1.2f, 1.5f);
         System.Random rng = new System.Random(1);
 
-        GeneData child = Genetics.Combine(new GeneData(Color.red, 1f), new GeneData(Color.blue, 1f), table, rng, out bool mutated);
+        float hue = Genetics.InheritHue(RED, BLUE, table, rng, out bool hueMutated);
+        float scale = Genetics.InheritScale(1f, 1f, table, rng, out bool scaleMutated);
+        Genetics.InheritStat(5f, 5f, table, rng, out bool statMutated);
 
-        Assert.IsTrue(mutated);
-        Assert.AreEqual(Color.green, child.color);
-        Assert.That(child.scale, Is.InRange(0.5f, 0.6f));
+        Assert.IsTrue(hueMutated && scaleMutated && statMutated);
+        Assert.AreEqual(GREEN, hue, 0.01f);
+        Assert.That(scale, Is.InRange(0.5f, 0.6f));
     }
 
     [Test]
-    public void Combine_NeverMutates_WhenChanceIsZero()
+    public void AllTraits_NeverMutate_WhenChanceIsZero()
     {
         table = MutationTable.Create(0f, new List<Color> { Color.green }, 0.5f, 0.6f, 1.2f, 1.5f);
         System.Random rng = new System.Random(1);
 
         for (int i = 0; i < RUNS; i++)
         {
-            Genetics.Combine(new GeneData(Color.red, 1f), new GeneData(Color.blue, 1f), table, rng, out bool mutated);
-            Assert.IsFalse(mutated);
+            Genetics.InheritHue(RED, BLUE, table, rng, out bool hueMutated);
+            Genetics.InheritScale(1f, 1f, table, rng, out bool scaleMutated);
+            Genetics.InheritStat(5f, 5f, table, rng, out bool statMutated);
+            Assert.IsFalse(hueMutated || scaleMutated || statMutated);
         }
     }
 
     [Test]
-    public void MutationColour_IsNeverAParentColour()
+    public void MutationHue_IsNeverAParentHue()
     {
         table = MutationTable.Create(1f, new List<Color> { Color.red, Color.green }, 1f, 1f, 1.2f, 1.5f);
         System.Random rng = new System.Random(1);
 
         for (int i = 0; i < RUNS; i++)
         {
-            Color child = Genetics.Combine(new GeneData(Color.red, 1f), new GeneData(Color.blue, 1f), table, rng, out _).color;
-            Assert.AreEqual(Color.green, child);
+            float hue = Genetics.InheritHue(RED, BLUE, table, rng, out _);
+            Assert.AreEqual(GREEN, hue, 0.01f);
         }
     }
 

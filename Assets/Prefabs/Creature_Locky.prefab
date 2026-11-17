@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 3995506566816015661}
   - component: {fileID: 5898071939728562726}
   - component: {fileID: 965941319735712402}
+  - component: {fileID: 965941319735712403}
   - component: {fileID: 3155481550736931801}
   - component: {fileID: 9109372960670118640}
   - component: {fileID: 6733837171339771101}
@@ -305,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureName: Locky
+  species: Locky
   stats:
   - {fileID: 1443643257233500907}
   - {fileID: 717722745567253499}
@@ -312,6 +314,8 @@ MonoBehaviour:
   - {fileID: 4569196434845309231}
   - {fileID: 4910940009041969506}
   - {fileID: 3995506566816015661}
+  - {fileID: 965941319735712402}
+  - {fileID: 965941319735712403}
 --- !u!114 &6391462788962343663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,13 +463,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1003086518409698029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e118a8950a4df1a4da1127db6e5bb74f, type: 3}
+  m_Script: {fileID: 11500000, guid: c01a0b1e5a7e4d2f9b3c6d8e0f1a2b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  species: Locky
-  color: {r: 1, g: 1, b: 1, a: 1}
-  scale: 1
+  trait:
+    name: Colour
+    value: 0
+    maxValue: 360
+    description: The colour of your cryptid's body.
   bodyRenderer: {fileID: 8283111195100094885}
+  saturation: 0.6
+--- !u!114 &965941319735712403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003086518409698029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1e7c3d9b2f4e6a8c0d1e2f3a4b5c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trait:
+    name: Size
+    value: 1
+    maxValue: 1
+    description: How big your cryptid is.
 --- !u!136 &3155481550736931801
 CapsuleCollider:
   m_ObjectHideFlags: 0

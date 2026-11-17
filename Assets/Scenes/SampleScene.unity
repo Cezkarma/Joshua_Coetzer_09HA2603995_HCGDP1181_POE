@@ -2031,21 +2031,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7604308029223887282, guid: b881671a2a435a042a696a703e330198, type: 3}
-      propertyPath: scale
+    - target: {fileID: 7604308029223887283, guid: b881671a2a435a042a696a703e330198, type: 3}
+      propertyPath: trait.value
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7604308029223887282, guid: b881671a2a435a042a696a703e330198, type: 3}
-      propertyPath: color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604308029223887282, guid: b881671a2a435a042a696a703e330198, type: 3}
-      propertyPath: color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604308029223887282, guid: b881671a2a435a042a696a703e330198, type: 3}
-      propertyPath: color.r
-      value: 0.18523192
+      propertyPath: trait.value
+      value: 109
       objectReference: {fileID: 0}
     - target: {fileID: 7960830357740165248, guid: b881671a2a435a042a696a703e330198, type: 3}
       propertyPath: m_Name
@@ -2254,8 +2246,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8472508351108705467, guid: 81f48aa87b7bba4418abf9be0141fb11, type: 3}
-      propertyPath: scale
+    - target: {fileID: 8472508351108705468, guid: 81f48aa87b7bba4418abf9be0141fb11, type: 3}
+      propertyPath: trait.value
       value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2271,20 +2263,8 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7139262651069034388}
     m_Modifications:
-    - target: {fileID: 965941319735712402, guid: 1a2c7cf019ce5f646bfb9c517bb3a3db, type: 3}
-      propertyPath: scale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 965941319735712402, guid: 1a2c7cf019ce5f646bfb9c517bb3a3db, type: 3}
-      propertyPath: color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 965941319735712402, guid: 1a2c7cf019ce5f646bfb9c517bb3a3db, type: 3}
-      propertyPath: color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 965941319735712402, guid: 1a2c7cf019ce5f646bfb9c517bb3a3db, type: 3}
-      propertyPath: color.r
+    - target: {fileID: 965941319735712403, guid: 1a2c7cf019ce5f646bfb9c517bb3a3db, type: 3}
+      propertyPath: trait.value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1003086518409698029, guid: 1a2c7cf019ce5f646bfb9c517bb3a3db, type: 3}

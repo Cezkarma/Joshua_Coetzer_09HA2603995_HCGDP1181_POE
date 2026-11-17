@@ -13,9 +13,8 @@ public class BreedingRoom : Room
     private float breedingTimer;
     private float cooldownTimer;
 
-    [SerializeField] private List<CreatureGenes> creaturePrefabs;
+    [SerializeField] private List<Creature> creaturePrefabs;
 
-    private static readonly string[] INHERITED_STATS = { "Health", "Speed", "Happiness", "Hunger" };
     private System.Random rng = new System.Random();
 
     [SerializeField] private MutationTable mutationTable;
@@ -66,11 +65,11 @@ public class BreedingRoom : Room
             return;
         }
 
-        CreatureGenes parentA = children[0].GetComponent<CreatureGenes>();
-        CreatureGenes parentB = children[1].GetComponent<CreatureGenes>();
+        Creature parentA = children[0].GetComponent<Creature>();
+        Creature parentB = children[1].GetComponent<Creature>();
 
-        CreatureGenes speciesParent = Random.value < 0.5f ? parentA : parentB;
-        CreatureGenes prefab = creaturePrefabs.Find(p => p.GetSpecies() == speciesParent.GetSpecies());
+        Creature speciesParent = Random.value < 0.5f ? parentA : parentB;
+        Creature prefab = creaturePrefabs.Find(p => p.GetSpecies() == speciesParent.GetSpecies());
 
         if (prefab == null)
         {
@@ -78,46 +77,18 @@ public class BreedingRoom : Room
             return;
         }
 
-        CreatureGenes baby = Instantiate(prefab, movePoint.position, Quaternion.identity, transform);
-        Creature babyCreature = baby.GetComponent<Creature>();
-        babyCreature.SetName($"Baby {speciesParent.GetSpecies()}");
-
-        GeneData childGenes = Genetics.Combine(parentA.GetGeneData(), parentB.GetGeneData(), mutationTable, rng, out bool genesMutated);
-        baby.SetGenes(childGenes);
-        bool statsMutated = InheritStats(babyCreature, parentA.GetComponent<Creature>(), parentB.GetComponent<Creature>());
+        Creature baby = Instantiate(prefab, movePoint.position, Quaternion.identity, transform);
+        baby.SetName($"Baby {speciesParent.GetSpecies()}");
+        bool mutated = baby.InheritFrom(parentA, parentB, mutationTable, rng);
 
         string message = $"A baby {speciesParent.GetSpecies()} was born!";
-        if (genesMutated || statsMutated)
+        if (mutated)
         {
             message += " It mutated!";
         }
 
         Debug.Log(message);
         UIManager.Instance.DisplayWarningMessage(message);
-    }
-
-    private bool InheritStats(Creature baby, Creature parentA, Creature parentB)
-    {
-        bool anyMutated = false;
-
-        foreach (string statName in INHERITED_STATS)
-        {
-            Stat babyStat = baby.GetStat(statName);
-            Stat statA = parentA.GetStat(statName);
-            Stat statB = parentB.GetStat(statName);
-
-            if (babyStat == null || statA == null || statB == null)
-            {
-                continue;
-            }
-
-            float maxValue = Genetics.InheritStat(statA.GetTrait().MaxValue, statB.GetTrait().MaxValue, mutationTable, rng, out bool statMutated);
-            babyStat.GetTrait().MaxValue = maxValue;
-            babyStat.GetTrait().Value = maxValue;
-            anyMutated |= statMutated;
-        }
-
-        return anyMutated;
     }
 
     private bool IsAlive(Transform creature)
